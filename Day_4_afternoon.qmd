@@ -1,0 +1,61 @@
+---
+title: "Day 4 Exploring Data"
+author: "Kelly Garvey"
+format: html
+editor: visual
+---
+
+### Exploratory Data Viz
+
+```{r}
+## Attach packages
+#| warning: false
+#| echo: false
+library(tidyverse)
+library(palmerpenguins)
+library(GGally)
+library(skimr)
+```
+
+```{r}
+view(penguins)
+```
+
+Check out your data a bit:
+
+```{r}
+## tell me column names
+names(penguins)
+dim(penguins)
+head(penguins)
+tail(penguins)
+```
+
+```{r}
+skim(penguins)
+```
+
+```{r}
+#| include: false
+GGally::ggpairs(penguins)
+```
+
+```{r}
+## make more individual plots 
+## jitterplot flipper length by species 
+
+ggplot(data=penguins, aes (x = species, y = flipper_length_mm)) +
+ geom_jitter(width = 0.2, ##jitter spacing
+             alpha = 0.5, ##opacity
+             aes (color = species)) +
+ geom_boxplot(fill=NA) +
+ theme_light() +
+ scale_color_manual(values= c("darkorchid4", "cyan4","goldenrod"))+
+ labs(x="Penguin species", y="Flipper length (mm)", title="Penguin flippers")
+```
+
+```{r}
+ggplot(data=penguins, aes(x=bill_length_mm))+
+ geom_histogram(aes(fill=species), color = "magenta")+
+ facet_wrap (~species, ncol=1) 
+```
